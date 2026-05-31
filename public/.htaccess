@@ -1,0 +1,14 @@
+# CiciQuiz - Public .htaccess
+RewriteEngine On
+
+# 🚫 EXCEPTION: Folder admin, s/, api/, assets → langsung serve, jangan lewat index.php
+RewriteRule ^admin/ - [L,NC]
+RewriteRule ^(s|api|assets|css|js|images|storage)/ - [L,NC]
+
+# 🚫 EXCEPTION: File statis → langsung serve
+RewriteRule \.(css|js|png|jpg|jpeg|gif|svg|ico|webp|woff2?|ttf|eot|pdf|json|txt)$ - [L,NC]
+
+# ✅ Front Controller: Hanya request yang tidak match exception yang masuk ke index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]
